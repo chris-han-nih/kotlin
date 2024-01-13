@@ -16,6 +16,14 @@ class Payment(
       throw Exception("Cards don't match")
     }
   }
+  
+  companion object {
+    fun groupByCard(payments: List<Payment>): List<Payment> {
+      return payments.groupBy { it.creditCard }
+        .values
+        .map { it.reduce { a, b -> a.combine(b) } }
+    }
+  }
 }
 
 class CreditCard {
